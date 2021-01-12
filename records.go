@@ -2,6 +2,7 @@ package dnspod
 
 import (
 	"fmt"
+	"strconv"
 )
 
 const (
@@ -28,6 +29,7 @@ type Record struct {
 	Remark        string `json:"remark,omitempty"`
 	UpdateOn      string `json:"updated_on,omitempty"`
 	UseAQB        string `json:"use_aqb,omitempty"`
+	Weight        *int   `json:"weight,omitempty"`
 }
 
 type recordsWrapper struct {
@@ -112,6 +114,10 @@ func (s *RecordsService) Create(domain string, recordAttributes Record) (Record,
 		payload.Add("status", recordAttributes.Status)
 	}
 
+	if recordAttributes.Weight != nil {
+		payload.Add("weight", strconv.Itoa(*recordAttributes.Weight))
+	}
+
 	returnedRecord := recordWrapper{}
 
 	res, err := s.client.post(methodRecordCreate, payload, &returnedRecord)
@@ -185,6 +191,10 @@ func (s *RecordsService) Update(domain string, recordID string, recordAttributes
 
 	if recordAttributes.Status != "" {
 		payload.Add("status", recordAttributes.Status)
+	}
+
+	if recordAttributes.Weight != nil {
+		payload.Add("weight", strconv.Itoa(*recordAttributes.Weight))
 	}
 
 	returnedRecord := recordWrapper{}
