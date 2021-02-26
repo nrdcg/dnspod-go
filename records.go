@@ -154,6 +154,7 @@ func (s *RecordsService) Get(domain string, recordID string) (Record, *Response,
 func (s *RecordsService) Update(domain string, recordID string, recordAttributes Record) (Record, *Response, error) {
 	payload := s.client.CommonParams.toPayLoad()
 	payload.Add("domain_id", domain)
+	payload.Add("record_id", recordID)
 
 	if recordAttributes.Name != "" {
 		payload.Add("sub_domain", recordAttributes.Name)
