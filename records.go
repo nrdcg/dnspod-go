@@ -1,6 +1,7 @@
 package dnspod
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 )
@@ -32,6 +33,14 @@ type Record struct {
 	Weight        *int   `json:"weight,omitempty"`
 }
 
+// RecordModify is the DNS record modify representation.
+type RecordModify struct {
+	ID     json.Number `json:"id,omitempty"`
+	Name   string      `json:"name,omitempty"`
+	Value  string      `json:"value,omitempty"`
+	Status string      `json:"status,omitempty"`
+}
+
 type recordsWrapper struct {
 	Status  Status     `json:"status"`
 	Info    DomainInfo `json:"info"`
@@ -42,6 +51,11 @@ type recordWrapper struct {
 	Status Status     `json:"status"`
 	Info   DomainInfo `json:"info"`
 	Record Record     `json:"record"`
+}
+
+type recordModifyWrapper struct {
+	Status Status       `json:"status"`
+	Record RecordModify `json:"record"`
 }
 
 // RecordsService handles communication with the DNS records related methods of the dnspod API.
@@ -167,7 +181,7 @@ func (s *RecordsService) Get(domain string, recordID string) (Record, *Response,
 // DNSPod API docs:
 // - https://www.dnspod.cn/docs/records.html#record-modify
 // - https://docs.dnspod.com/api/5fe1a5a16e336701a2111c76/
-func (s *RecordsService) Update(domain string, recordID string, recordAttributes Record) (Record, *Response, error) {
+func (s *RecordsService) Update(domain string, recordID string, recordAttributes Record) (RecordModify, *Response, error) {
 	payload := s.client.CommonParams.toPayLoad()
 	payload.Add("domain_id", domain)
 	payload.Add("record_id", recordID)
@@ -208,11 +222,11 @@ func (s *RecordsService) Update(domain string, recordID string, recordAttributes
 		payload.Add("weight", strconv.Itoa(*recordAttributes.Weight))
 	}
 
-	returnedRecord := recordWrapper{}
+	returnedRecord := recordModifyWrapper{}
 
 	res, err := s.client.post(methodRecordModify, payload, &returnedRecord)
 	if err != nil {
-		return Record{}, res, err
+		return RecordModify{}, res, err
 	}
 
 	if returnedRecord.Status.Code != "1" {

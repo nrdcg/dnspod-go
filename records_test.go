@@ -135,7 +135,7 @@ func TestRecordsService_UpdateRecord(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	want := Record{ID: "26954449", Name: "@", Status: "enable"}
+	want := RecordModify{ID: "26954449", Name: "@", Status: "enable"}
 	if !reflect.DeepEqual(record, want) {
 		t.Errorf("got %+v, want %+v", record, want)
 	}
