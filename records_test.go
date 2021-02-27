@@ -126,7 +126,7 @@ func TestRecordsService_UpdateRecord(t *testing.T) {
 			return
 		}
 
-		_, _ = fmt.Fprint(w, `{"status": {"code":"1","message":""},"record":{"id":"26954449", "name":"@", "status":"enable"}}`)
+		_, _ = fmt.Fprint(w, `{"status": {"code":"1","message":""},"record":{"id":26954449, "name":"@", "status":"enable"}}`)
 	})
 
 	recordValues := Record{ID: "26954449", Name: "@", Status: "enable"}
