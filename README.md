@@ -31,7 +31,7 @@ func main() {
 	// Get a list of your domains
 	domains, _, _ := client.Domains.List()
 	for _, domain := range domains {
-		fmt.Printf("Domain: %s (id: %d)\n", domain.Name, domain.ID)
+		fmt.Printf("Domain: %s (id: %s)\n", domain.Name, domain.ID)
 	}
 
 	// Get a list of your domains (with error management)
@@ -40,13 +40,13 @@ func main() {
 		log.Fatalln(err)
 	}
 	for _, domain := range domains {
-		fmt.Printf("Domain: %s (id: %d)\n", domain.Name, domain.ID)
+		fmt.Printf("Domain: %s (id: %s)\n", domain.Name, domain.ID)
 	}
 
 	// Create a new Domain
 	newDomain := dnspod.Domain{Name: "example.com"}
 	domain, _, _ := client.Domains.Create(newDomain)
-	fmt.Printf("Domain: %s\n (id: %d)", domain.Name, domain.ID)
+	fmt.Printf("Domain: %s\n (id: %s)", domain.Name, domain.ID)
 }
 ```
 
