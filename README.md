@@ -8,6 +8,17 @@ A Go client for the DNSPod API.
 
 Originally inspired by [dnsimple](https://github.com/weppos/dnsimple-go/dnsimple)
 
+
+---
+
+DNSPod is now a part of Tencent Cloud.
+
+We recommend using https://github.com/tencentcloud/tencentcloud-sdk-go
+
+https://github.com/TencentCloud/tencentcloud-sdk-go/tree/master/tencentcloud/dnspod
+
+---
+
 ## Getting Started
 
 This library is a Go client you can use to interact with the DNSPod API.
